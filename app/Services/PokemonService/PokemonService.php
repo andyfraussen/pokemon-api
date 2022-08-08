@@ -4,6 +4,7 @@ namespace App\Services\PokemonService;
 
 use App\Models\Pokemon;
 use PokePHP\PokeApi;
+use Illuminate\Support\Collection;
 
 class PokemonService implements PokemonServiceInterface
 {
@@ -39,5 +40,10 @@ class PokemonService implements PokemonServiceInterface
         ]);
 
         return $pokemon;
+    }
+
+    public function getAll(): Collection
+    {
+        return Pokemon::all();
     }
 }

@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pokemon;
-use App\Models\PokemonDetails;
 use App\Services\PokemonService\PokemonServiceInterface;
 use Illuminate\Http\Request;
-use PokePHP\PokeApi;
-use function PHPUnit\Framework\stringContains;
+use Illuminate\Http\Response;
 
 class PokemonController extends Controller
 {
@@ -18,7 +15,11 @@ class PokemonController extends Controller
         $this->pokemonService = $pokemonService;
     }
 
-    public function get(){
-        return Pokemon::all();
+    public function getAll($order = 'id-asc'){
+        $content = $this->pokemonService->getAll()->sortBy([
+            explode('-', $order)
+        ]);
+
+        return $this->apiResponse(Response::HTTP_OK, $content);
     }
 }
