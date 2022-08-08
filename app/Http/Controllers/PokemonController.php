@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PokemonsRequest;
 use App\Services\PokemonService\PokemonServiceInterface;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class PokemonController extends Controller
@@ -15,17 +15,15 @@ class PokemonController extends Controller
         $this->pokemonService = $pokemonService;
     }
 
-    public function getAll(Request $request){
+    public function getAll(PokemonsRequest $request){
         $order = $request->order ? $request->order : 'id-asc';
-
         $content = $this->pokemonService->getAll()->sortBy([
             explode('-', $order)
         ]);
-
         return $this->apiResponse(Response::HTTP_OK, $content, 'Successful operation');
     }
 
-    public function getPokemon($id){
+    public function getPokemon(int $id){
         if (!$id){
             return $this->apiResponse(Response::HTTP_NOT_FOUND, null, 'Pokemon not found');
         }
