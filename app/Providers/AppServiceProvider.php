@@ -13,7 +13,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind(\App\Services\PokemonService\PokemonServiceInterface::class, \App\Services\PokemonService\PokemonService::class);
     }
 
     /**

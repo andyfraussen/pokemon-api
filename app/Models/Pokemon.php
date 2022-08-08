@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class Pokemon extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'sprites', 'types'];
+    protected $fillable = ['pokemon_id', 'name', 'sprites', 'types'];
 
     public function details(): HasOne
     {

@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('pokemon', function (Blueprint $table) {
             $table->id();
+            $table->unsignedInteger('pokemon_id');
             $table->string('name');
             $table->json('sprites');
             $table->json('types');
