@@ -15,11 +15,25 @@ class PokemonController extends Controller
         $this->pokemonService = $pokemonService;
     }
 
-    public function getAll($order = 'id-asc'){
+    public function getAll(Request $request){
+        $order = $request->order ? $request->order : 'id-asc';
+
         $content = $this->pokemonService->getAll()->sortBy([
             explode('-', $order)
         ]);
 
-        return $this->apiResponse(Response::HTTP_OK, $content);
+        return $this->apiResponse(Response::HTTP_OK, $content, 'Successful operation');
+    }
+
+    public function getPokemon($id){
+        if (!$id){
+            return $this->apiResponse(Response::HTTP_NOT_FOUND, null, 'Pokemon not found');
+        }
+
+        if (!$content = $this->pokemonService->getPokemon($id)){
+            return $this->apiResponse(Response::HTTP_NOT_FOUND, null, 'Pokemon not found');
+        }
+
+        return $this->apiResponse(Response::HTTP_OK, $content, 'Successful operation');
     }
 }

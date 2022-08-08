@@ -12,7 +12,7 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    protected function apiResponse($status, $content = null)
+    protected function apiResponse($status, $content = null, $description = null)
     {
         $response = [];
 
@@ -20,8 +20,8 @@ class Controller extends BaseController
             $response['content'] = $content;
         }
 
-        if ($status === 200) {
-            $response['description'] = 'Successful operation';
+        if (isset($description)) {
+            $response['description'] = $description;
         }
 
         if (empty($response)) {

@@ -20,4 +20,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::prefix('v1')->group(function () {
     Route::get('/pokemons', [\App\Http\Controllers\PokemonController::class, 'getAll']);
+    Route::get('/pokemons/{id}', [\App\Http\Controllers\PokemonController::class, 'getPokemon']);
 });
