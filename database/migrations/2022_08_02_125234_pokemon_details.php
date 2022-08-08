@@ -24,13 +24,13 @@ return new class extends Migration
             $table->json('sprites');
             $table->json('types');
             $table->decimal('height');
-//            $table->decimal('weight');
-//            $table->json('moves');
-//            $table->decimal('order');
-//            $table->string('species');
-//            $table->json('stats');
-//            $table->json('abilities');
-//            $table->string('form');
+            $table->decimal('weight');
+            $table->json('moves');
+            $table->integer('order');
+            $table->json('species');
+            $table->json('stats');
+            $table->json('abilities');
+            $table->json('form');
             $table->timestamps();
         });
     }

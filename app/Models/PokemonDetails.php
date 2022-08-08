@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class PokemonDetails extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'sprites', 'types', 'height'];
+    protected $fillable = ['name', 'sprites', 'types', 'height', 'weight', 'moves', 'order', 'species', 'stats', 'abilities', 'form'];
 
     public function pokemon(): BelongsTo{
         return $this->belongsTo(Pokemon::class);

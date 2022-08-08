@@ -6,5 +6,5 @@ use App\Models\Pokemon;
 
 interface PokemonServiceInterface
 {
-    function create(object $pokemonDTO): Pokemon;
+    function create(int $pokemonID): Pokemon;
 }

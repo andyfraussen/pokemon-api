@@ -38,21 +38,18 @@ class importPokemon extends Command
      */
     public function handle()
     {
-        $api = new PokeApi;
-
         if ($gen = $this->options()['gen']) {
             $gen = env('GENERATION_' . $gen);
             for ($start = intval(explode('-', $gen)[0]); $start <= $end = intval(explode('-', $gen)[1]); $start++) {
-                $data = json_decode($api->pokemon($start));
-                $this->pokemonService->create($data);
+                $this->pokemonService->create($start);
             }
-        } elseif ($this->options()['id']) {
-            $data = json_decode($api->pokemon($this->options()['id']));
-            $this->pokemonService->create($data);
-        } elseif ($this->options()['name']){
-            $data = json_decode($api->pokemon($this->options()['name']));
-        }
 
-        return 'import complete';
+        } elseif ($this->options()['id']) {
+            $this->pokemonService->create(intval($this->options()['id']));
+        } elseif ($this->options()['name']){
+            $api = new PokeApi;
+            $id = json_decode($api->pokemon($this->options()['name']))->id;
+            $this->pokemonService->create($id);
+        }
     }
 }
