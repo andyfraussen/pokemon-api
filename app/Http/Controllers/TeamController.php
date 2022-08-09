@@ -16,6 +16,19 @@ class TeamController extends Controller
      */
     public function index()
     {
+        $user = User::first();
+
+        $team = Team::create([
+            'name' => 'test',
+            'pokemons' => json_encode($user)
+        ]);
+
+        $useteam = UserTeam::updateOrCreate([
+            'user_id' => $user->id,
+            'team_id' => 1
+        ]);
+
+        dd($user->userTeams->first());
     }
 
     /**

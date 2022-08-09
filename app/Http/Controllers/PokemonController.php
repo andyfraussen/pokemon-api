@@ -17,7 +17,7 @@ class PokemonController extends Controller
 
     public function index(PokemonsRequest $request){
         $order = $request->order ? $request->order : 'id-asc';
-        $content = $this->pokemonService->getAll()->sortBy([
+        $content = $this->pokemonService->index()->sortBy([
             explode('-', $order)
         ]);
         return $this->apiResponse(Response::HTTP_OK, $content, 'Successful operation');
@@ -28,7 +28,7 @@ class PokemonController extends Controller
             return $this->apiResponse(Response::HTTP_NOT_FOUND, null, 'Pokemon not found');
         }
 
-        if (!$content = $this->pokemonService->getPokemon($id)){
+        if (!$content = $this->pokemonService->show($id)){
             return $this->apiResponse(Response::HTTP_NOT_FOUND, null, 'Pokemon not found');
         }
 

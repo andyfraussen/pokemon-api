@@ -43,12 +43,12 @@ class PokemonService implements PokemonServiceInterface
         return $pokemon;
     }
 
-    public function getAll(): Collection
+    public function index(): Collection
     {
         return Pokemon::all();
     }
 
-    public function getPokemon(int $pokemonID): PokemonDetails
+    public function show(int $pokemonID): PokemonDetails
     {
         return PokemonDetails::firstWhere('pokemon_id', $pokemonID);
     }
