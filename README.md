@@ -16,3 +16,5 @@
 - --gen 1
 - --name pikachu
 - --id 151
+- --file -> reads pokemons.json file
+

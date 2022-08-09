@@ -22,7 +22,7 @@ class importPokemon extends Command
      *
      * @var string
      */
-    protected $signature = 'import:pokemon {--gen=} {--id=} {--name=}';
+    protected $signature = 'import:pokemon {--gen=} {--id=} {--name=} {--file}';
 
     /**
      * The console command description.
@@ -46,10 +46,16 @@ class importPokemon extends Command
 
         } elseif ($this->options()['id']) {
             $this->pokemonService->create(intval($this->options()['id']));
-        } elseif ($this->options()['name']){
+        } elseif ($this->options()['name']) {
             $api = new PokeApi;
             $id = json_decode($api->pokemon($this->options()['name']))->id;
             $this->pokemonService->create($id);
+        } elseif ($this->options()['file']) {
+            $data = json_decode(file_get_contents(base_path() . "/pokemons.json"));
+            foreach  ($data as $d){
+                $this->pokemonService->create($d->id);
+                // todo: create service without api call
+            }
         }
     }
 }
