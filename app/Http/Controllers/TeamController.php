@@ -33,7 +33,7 @@ class TeamController extends Controller
 
         $content = $this->teamService->create($user->id, $request->all());
 
-        return $this->apiResponse(Response::HTTP_OK, $content, 'Successful operation');
+        return $this->apiResponse(Response::HTTP_CREATED, $content, 'Successful operation');
     }
 
     public function show($id)

@@ -24,7 +24,7 @@ class TeamCRUDTest extends TestCase
             'pokemons' => [1,2,3,4,5]
         ]);
 
-        $response->assertStatus(200);
+        $response->assertStatus(201);
     }
     public function test_user_team_show()
     {
