@@ -17,8 +17,6 @@ class TeamService implements TeamServiceInterface
 
     public function create(int $userId, array $teamDTO): Team
     {
-        $teamDTO['pokemons'] = explode(',', $teamDTO['pokemons']);
-
         $team = Team::create([
             'name' => $teamDTO['name'],
             'pokemons' => array_map(function ($id) {
@@ -42,8 +40,6 @@ class TeamService implements TeamServiceInterface
 
     function update(int $userId, int $teamId, array $teamDTO): Team
     {
-        $teamDTO['pokemons'] = explode(',', $teamDTO['pokemons']);
-
         $team = Team::firstWhere('id', $teamId);
 
         $team->update([
