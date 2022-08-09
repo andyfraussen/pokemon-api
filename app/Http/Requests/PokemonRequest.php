@@ -6,7 +6,7 @@ use App\Enums\PokemonOrderEnum;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class PokemonsRequest extends FormRequest
+class PokemonRequest extends FormRequest
 {
 
     /**

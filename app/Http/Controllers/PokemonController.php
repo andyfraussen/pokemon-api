@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\PokemonsRequest;
+use App\Http\Requests\PokemonRequest;
 use App\Services\PokemonService\PokemonServiceInterface;
 use Illuminate\Http\Response;
 
@@ -15,7 +15,7 @@ class PokemonController extends Controller
         $this->pokemonService = $pokemonService;
     }
 
-    public function index(PokemonsRequest $request){
+    public function index(PokemonRequest $request){
         $order = $request->order ? $request->order : 'id-asc';
         $content = $this->pokemonService->index()->sortBy([
             explode('-', $order)

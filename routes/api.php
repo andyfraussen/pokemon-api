@@ -23,9 +23,8 @@ Route::prefix('v1')->group(function () {
     Route::get('/pokemons/{id}', [\App\Http\Controllers\PokemonController::class, 'show']);
 
     Route::get('/teams', [\App\Http\Controllers\TeamController::class, 'index']);
-
     Route::post('/teams', [\App\Http\Controllers\TeamController::class, 'create']);
-    Route::put('/teams/{id}', [\App\Http\Controllers\PokemonController::class, 'update']);
-    Route::get('/teams/{id}', [\App\Http\Controllers\PokemonController::class, 'show']);
-    Route::delete('/teams/{id}', [\App\Http\Controllers\PokemonController::class, 'delete']);
+    Route::put('/teams/{id}', [\App\Http\Controllers\TeamController::class, 'update']);
+    Route::get('/teams/{id}', [\App\Http\Controllers\TeamController::class, 'show']);
+    Route::delete('/teams/{id}', [\App\Http\Controllers\TeamController::class, 'delete']);
 });

@@ -15,6 +15,11 @@ class PokemonService implements PokemonServiceInterface
         $this->pokeApi = new PokeApi();
     }
 
+    public function index(): Collection
+    {
+        return Pokemon::all();
+    }
+
     public function create(int $pokemonID): Pokemon
     {
         $data = json_decode($this->pokeApi->pokemon($pokemonID));
@@ -41,11 +46,6 @@ class PokemonService implements PokemonServiceInterface
         ]);
 
         return $pokemon;
-    }
-
-    public function index(): Collection
-    {
-        return Pokemon::all();
     }
 
     public function show(int $pokemonID): PokemonDetails

@@ -2,88 +2,77 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Team;
+use App\Http\Requests\TeamRequest;
+use App\Services\TeamService\TeamServiceInterface;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
+
 use App\Models\User;
-use App\Models\UserTeam;
-use Illuminate\Http\Request;
 
 class TeamController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    private TeamServiceInterface $teamService;
+
+    public function __construct(TeamServiceInterface $teamService)
+    {
+        $this->teamService = $teamService;
+    }
+
     public function index()
     {
+        $content = $this->teamService->index();
+
+        return $this->apiResponse(Response::HTTP_OK, $content, 'Successful operation');
+    }
+
+    public function create(TeamRequest $request)
+    {
+//        if (!$user = auth()->user()){
+//            return $this->apiResponse(Response::HTTP_NOT_FOUND, null, 'User not authenticated');
+//        }
         $user = User::first();
 
-        $team = Team::create([
-            'name' => 'test',
-            'pokemons' => json_encode($user)
-        ]);
+        $content = $this->teamService->create($user->id, $request->all());
 
-        $useteam = UserTeam::updateOrCreate([
-            'user_id' => $user->id,
-            'team_id' => 1
-        ]);
-
-        dd($user->userTeams->first());
+        return $this->apiResponse(Response::HTTP_OK, $content, 'Successful operation');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
-        //
+        if (!$id){
+            return $this->apiResponse(Response::HTTP_NOT_FOUND, null, 'Id not included');
+        }
+
+        if (!$content = $this->teamService->show($id)){
+            return $this->apiResponse(Response::HTTP_NOT_FOUND, null, 'Team not found');
+        }
+
+        return $this->apiResponse(Response::HTTP_OK, $content, 'Successful operation');
     }
 
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function update(TeamRequest $request, $teamId)
     {
-        //
+//        if (!$user = auth()->user()){
+//            return $this->apiResponse(Response::HTTP_NOT_FOUND, null, 'User not authenticated');
+//        }
+        $user = User::first();
+
+        $content = $this->teamService->update($user->id, $teamId, $request->all());
+
+        return $this->apiResponse(Response::HTTP_OK, $content, 'Successful operation');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function delete($id)
+    public function delete($teamId)
     {
-        //
+//        if (!$user = auth()->user()){
+//            return $this->apiResponse(Response::HTTP_NOT_FOUND, null, 'User not authenticated');
+//        }
+        $user = User::first();
+
+        if (!$this->teamService->delete($teamId)){
+            return $this->apiResponse(Response::HTTP_NOT_FOUND, null, 'Team not found');
+        }
+
+        return $this->apiResponse(Response::HTTP_OK, null, 'Successful operation');
     }
 }

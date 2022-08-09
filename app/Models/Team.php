@@ -20,6 +20,11 @@ class Team extends Model
         'pokemons',
     ];
 
+    protected $casts = [
+        'pokemons' => 'array'
+    ];
+
+
     public function userTeams(): HasMany
     {
         return $this->hasMany(UserTeam::class);

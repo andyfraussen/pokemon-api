@@ -8,7 +8,7 @@ use Illuminate\Support\Collection;
 
 interface PokemonServiceInterface
 {
-    function create(int $pokemonID): Pokemon;
     function index(): Collection;
+    function create(int $pokemonID): Pokemon;
     function show(int $pokemonID): PokemonDetails;
 }
