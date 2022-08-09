@@ -11,6 +11,16 @@ class PokemonDetails extends Model
     use HasFactory;
     protected $fillable = ['name', 'sprites', 'types', 'height', 'weight', 'moves', 'order', 'species', 'stats', 'abilities', 'form'];
 
+    protected $casts = [
+        'sprites' => 'array',
+        'types' => 'array',
+        'moves' => 'array',
+        'species' => 'array',
+        'stats' => 'array',
+        'abilities' => 'array',
+        'form' => 'array',
+    ];
+
     public function pokemon(): BelongsTo{
         return $this->belongsTo(Pokemon::class);
     }

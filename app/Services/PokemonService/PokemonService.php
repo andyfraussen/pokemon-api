@@ -24,32 +24,36 @@ class PokemonService implements PokemonServiceInterface
     {
         $data = json_decode($this->pokeApi->pokemon($pokemonID));
 
-        $pokemon = Pokemon::updateOrCreate([
-            'pokemon_id' => $data->id,
-            'name' => $data->name,
-            'sprites' => json_encode($data->sprites),
-            'types' => json_encode($data->types),
-        ]);
+        $pokemon = Pokemon::firstWhere('pokemon_id', $pokemonID);
 
-        $pokemon->details()->updateOrCreate([
-            'name' => $data->name,
-            'sprites' => json_encode($data->sprites),
-            'types' => json_encode($data->types),
-            'height' => $data->height,
-            'weight' => $data->weight,
-            'moves'=> json_encode($data->moves),
-            'order'=> $data->order,
-            'species'=> $this->pokeApi->pokemonSpecies($data->id),
-            'stats'=> json_encode($data->stats),
-            'abilities'=> json_encode($data->abilities),
-            'form' => $this->pokeApi->pokemonForm($data->id),
-        ]);
+        if (!$pokemon){
+            $pokemon = Pokemon::create([
+                'pokemon_id' => $data->id,
+                'name' => $data->name,
+                'sprites' => json_encode($data->sprites),
+                'types' => json_encode($data->types),
+            ]);
+
+            $pokemon->details()->create([
+                'name' => $data->name,
+                'sprites' => json_encode($data->sprites),
+                'types' => json_encode($data->types),
+                'height' => $data->height,
+                'weight' => $data->weight,
+                'moves'=> json_encode($data->moves),
+                'order'=> $data->order,
+                'species'=> $this->pokeApi->pokemonSpecies($data->id),
+                'stats'=> json_encode($data->stats),
+                'abilities'=> json_encode($data->abilities),
+                'form' => $this->pokeApi->pokemonForm($data->id),
+            ]);
+        }
 
         return $pokemon;
     }
 
     public function show(int $pokemonID): PokemonDetails
     {
-        return PokemonDetails::firstWhere('pokemon_id', $pokemonID);
+        return Pokemon::firstWhere('pokemon_id', $pokemonID)->details;
     }
 }

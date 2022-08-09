@@ -11,6 +11,11 @@ class Pokemon extends Model
     use HasFactory;
     protected $fillable = ['pokemon_id', 'name', 'sprites', 'types'];
 
+    protected $casts = [
+        'sprites' => 'array',
+        'types' => 'array',
+    ];
+
     public function details(): HasOne
     {
         return $this->hasOne(PokemonDetails::class);
