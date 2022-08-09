@@ -19,6 +19,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::prefix('v1')->group(function () {
-    Route::get('/pokemons', [\App\Http\Controllers\PokemonController::class, 'getAll']);
-    Route::get('/pokemons/{id}', [\App\Http\Controllers\PokemonController::class, 'getPokemon']);
+    Route::get('/pokemons', [\App\Http\Controllers\PokemonController::class, 'index']);
+    Route::get('/pokemons/{id}', [\App\Http\Controllers\PokemonController::class, 'show']);
+
+    Route::get('/teams', [\App\Http\Controllers\TeamController::class, 'index']);
+
+    Route::post('/teams', [\App\Http\Controllers\TeamController::class, 'create']);
+    Route::put('/teams/{id}', [\App\Http\Controllers\PokemonController::class, 'update']);
+    Route::get('/teams/{id}', [\App\Http\Controllers\PokemonController::class, 'show']);
+    Route::delete('/teams/{id}', [\App\Http\Controllers\PokemonController::class, 'delete']);
 });
